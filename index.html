@@ -198,6 +198,73 @@ a.medal:hover { transform: translateY(-3px) scale(1.02); }
 #ico-pause { display: none !important; }
 #pases { display: none; }
 
+/* Adaptación para celulares */
+@media (max-width: 600px) {
+  body {
+    padding-left: 12px;
+    padding-right: 12px;
+    overflow-x: hidden;
+  }
+
+  .invite {
+    width: 100%;
+    max-width: 460px;
+  }
+
+  .name {
+    font-size: clamp(88px, 25vw, 120px);
+  }
+
+  .apellido {
+    font-size: clamp(24px, 7vw, 36px);
+    transform: none;
+    letter-spacing: .14em;
+  }
+
+  .xv {
+    font-size: clamp(76px, 23vw, 110px);
+  }
+
+  .xvimg {
+    height: auto;
+    width: 42%;
+    max-width: 130px;
+  }
+
+  .xvrow {
+    gap: 8px;
+  }
+
+  .count {
+    gap: 0;
+    width: 100%;
+  }
+
+  .seg {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .seg b,
+  .colon {
+    font-size: clamp(30px, 10vw, 46px);
+  }
+
+  .seg span {
+    font-size: 11px;
+  }
+
+  .panel {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .block {
+    padding: 32px 4px;
+  }
+}
+
+
 </style>
 </head>
 <body>
