@@ -253,9 +253,9 @@ a.medal:hover { transform: translateY(-3px) scale(1.02); }
   }
   
   .name {
-    font-size: 52px;
+    font-size: clamp(65px, 22vw, 85px); /* Un poco más grande que 52px para que destaque */
     line-height: 0.9;
-    margin-bottom: -10px;
+    margin-bottom: 0px;
   }
 
   .apellido {
