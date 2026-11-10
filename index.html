@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ari XV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,700&family=Marcellus&family=Oswald:wght@500;600&family=Pinyon+Script&display=swap">
+<style>
+/* Layout: one centered invitation column on a silver-glitter ground, disco ball first, then date, countdown, details and RSVP. Single light "silver" look by design. */
+:root {
+  --bg: #e9eaed;
+  --paper: #f3f4f6;
+  --ink: #2a2c30;
+  --muted: #565961;
+  --line: #c9ccd2;
+  --shine: #ffffff;
+  --script: "Pinyon Script", "Snell Roundhand", cursive;
+  --head: "Marcellus", "Cormorant Garamond", Georgia, serif;
+  --num: "Oswald", "Arial Narrow", Impact, sans-serif;
+  --display: "Bodoni Moda", "Didot", Georgia, serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(60% 40% at 50% 0%, #ffffff 0%, transparent 70%),
+    linear-gradient(180deg, var(--paper) 0%, var(--bg) 55%, #dcdee2 100%);
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--head);
+  font-size: 17px;
+  line-height: 1.55;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+#glitter { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+.invite {
+  position: relative; z-index: 1;
+  max-width: 460px; margin-inline: auto;
+  text-align: center;
+  padding-block: 28px 0;
+}
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+p { margin: 0; }
+h2 {
+  font-family: var(--head); font-weight: 400;
+  font-size: clamp(34px, 9vw, 44px); line-height: 1.1; margin: 0 0 10px;
+  letter-spacing: 0.01em; text-wrap: balance;
+}
+.sub { color: var(--muted); max-width: 30ch; margin-inline: auto; text-wrap: balance; }
+.block { padding: 40px 8px; }
+
+/* Hero */
+.ball-wrap { display: grid; place-items: center; }
+#ball { width: 260px; height: 275px; max-width: 100%; display: block; }
+.xvrow { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: -4px; }
+.xvrow small { font-size: 13px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+.xv {
+  font-family: var(--display); font-weight: 700;
+  font-size: clamp(96px, 28vw, 128px); line-height: 1; letter-spacing: -0.01em;
+  background: linear-gradient(115deg, #7d818a 0%, #f2f3f5 22%, #8b8f98 42%, #ffffff 60%, #9a9ea7 80%, #dfe1e5 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(255,255,255,.9)) drop-shadow(0 4px 6px rgba(60,64,72,.28));
+  animation: sheen 7s ease-in-out infinite alternate;
+}
+@keyframes sheen { from { background-position: 0% 0; } to { background-position: 100% 0; } }
+.name {
+  font-family: var(--script); font-weight: 400;
+  font-size: clamp(120px, 38vw, 168px); line-height: .8;
+  margin: 4px 0 0; color: var(--ink);
+  text-shadow: 0 2px 0 rgba(255,255,255,.8);
+}
+.intro { margin: 26px auto 0; max-width: 30ch; color: var(--ink); text-wrap: balance; }
+.intro + .intro { margin-top: 14px; }
+
+/* Player */
+.player { margin: 30px auto 0; max-width: 320px; }
+#prog { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; margin: 0; cursor: pointer; }
+#prog::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--ink) var(--p, 0%), #b9bcc3 var(--p, 0%)); }
+#prog::-moz-range-track { height: 4px; border-radius: 2px; background: #b9bcc3; }
+#prog::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--ink); }
+#prog::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: var(--ink); margin-top: -4px; }
+#prog::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: var(--ink); }
+.ctrl { display: flex; justify-content: center; align-items: center; gap: 26px; margin-top: 6px; }
+.ctrl button { width: 44px; height: 44px; border: 0; background: transparent; color: var(--ink); cursor: pointer; display: grid; place-items: center; border-radius: 50%; }
+.ctrl button svg { width: 22px; height: 22px; fill: currentColor; }
+.ctrl #play { width: 52px; height: 52px; background: radial-gradient(circle at 35% 30%, #fff, #d9dce0 75%); box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 3px #aeb2b9, 0 4px 10px rgba(70,75,85,.25); }
+.ctrl #play svg { width: 24px; height: 24px; }
+
+/* Date */
+.month { font-family: var(--display); font-weight: 700; font-size: 30px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 18px; }
+.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; align-items: center; }
+.week .wd { font-size: 13px; letter-spacing: .06em; color: var(--muted); }
+.week .wd.on { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; font-weight: 400; }
+.week .dn { font-size: 20px; height: 48px; display: grid; place-items: center; }
+.week .dn.on {
+  width: 52px; height: 52px; justify-self: center; border-radius: 50%; font-size: 28px;
+  background: radial-gradient(circle at 35% 30%, #fff, #dcdfe3 70%);
+  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 4px #aeb2b9, 0 4px 10px rgba(70,75,85,.25);
+}
+.week .dn.dim { color: var(--muted); }
+.arrow { font-size: 20px; color: var(--muted); margin: 6px 0 8px; letter-spacing: 0; line-height: 1; }
+.time {
+  display: inline-block; min-width: 168px; padding: 8px 22px; font-size: 22px; letter-spacing: .06em;
+  border-radius: 8px; background: linear-gradient(180deg, #f6f7f8, #d8dadf);
+  box-shadow: inset 0 0 0 2px #fff, inset 0 0 0 3px #a9adb4, 0 4px 10px rgba(70,75,85,.2);
+}
+
+/* Countdown */
+.count { display: flex; justify-content: center; align-items: flex-start; gap: 2px; margin-top: 28px; }
+.seg { display: grid; justify-items: center; min-width: 0; }
+.seg b {
+  font-family: var(--num); font-weight: 600; font-size: clamp(44px, 14vw, 62px); line-height: 1.05;
+  font-variant-numeric: tabular-nums; color: #3a3d42; letter-spacing: .01em;
+}
+.seg span { font-size: 13px; color: var(--muted); }
+.colon { font-family: var(--num); font-weight: 600; font-size: clamp(44px, 14vw, 62px); line-height: 1.05; color: #3a3d42; }
+
+/* Medals */
+.medal {
+  display: grid; place-items: center; width: 148px; height: 148px; margin: 22px auto 0;
+  border-radius: 50%; text-decoration: none; color: inherit;
+  background: radial-gradient(circle at 34% 28%, #ffffff 0%, #e6e8eb 45%, #c4c7cd 78%, #eceef0 100%);
+  box-shadow: inset 0 0 0 7px rgba(255,255,255,.85), inset 0 0 0 9px #b3b7be, 0 12px 28px rgba(70,75,85,.28);
+  transition: transform .25s;
+}
+a.medal:hover { transform: translateY(-3px) scale(1.02); }
+.medal svg { width: 66px; height: 66px; filter: drop-shadow(0 2px 0 rgba(255,255,255,.9)) drop-shadow(0 -1px 1px rgba(70,75,85,.35)); }
+.cta { display: block; margin-top: 10px; font-size: 15px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+
+/* Glitter panels */
+.panel {
+  position: relative; overflow: hidden; margin-inline: -8px;
+  border-radius: 36px 36px 0 0; padding: 44px 24px 40px;
+  background: linear-gradient(180deg, #eceef0 0%, #d6d9de 100%);
+  box-shadow: inset 0 1px 0 #fff, 0 -10px 30px rgba(80,85,95,.12);
+}
+.panel::before, .panel::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.95) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.85) 0 1.2px, transparent 1.8px),
+    radial-gradient(circle at 45% 85%, rgba(120,125,135,.45) 0 .8px, transparent 1.4px);
+  background-size: 37px 41px, 53px 47px, 29px 33px;
+  animation: tw 4.5s ease-in-out infinite;
+}
+.panel::after { background-position: 17px 11px, 9px 23px, 5px 3px; animation-delay: 2.2s; }
+@keyframes tw { 0%,100% { opacity: .25; } 50% { opacity: 1; } }
+.panel > * { position: relative; }
+.panel .gap { height: 46px; }
+.addr { line-height: 1.5; }
+
+/* Memories */
+.chip {
+  font: inherit; font-size: 17px; letter-spacing: .04em; margin-top: 22px;
+  color: #fff; border: 0; border-radius: 999px; padding: 12px 26px; cursor: pointer;
+  background: linear-gradient(180deg, #4a4d54, #2a2c30);
+  box-shadow: 0 6px 16px rgba(40,42,48,.3);
+  transition: transform .2s;
+}
+.chip:hover { transform: translateY(-1px); }
+.hint { margin-top: 10px; font-size: 14px; color: var(--muted); min-height: 1.5em; }
+
+.close { padding: 56px 8px 56px; }
+.close .script { font-family: var(--script); font-size: clamp(52px, 15vw, 68px); line-height: 1.05; text-wrap: balance; }
+.rise { animation: rise .9s cubic-bezier(.2,.7,.2,1) both; }
+.rise.d1 { animation-delay: .15s; } .rise.d2 { animation-delay: .3s; } .rise.d3 { animation-delay: .45s; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+@media (min-width: 700px) { .invite { padding-top: 40px; } }
+@media (prefers-reduced-motion: reduce) {
+  .xv, .panel::before, .panel::after, .rise { animation: none; }
+  .panel::before { opacity: .8; } .panel::after { opacity: .5; }
+  .medal, .chip { transition: none; }
+}
+.xvimg { display: block; height: 150px; width: auto; max-width: 60%; animation: glint 3.2s ease-in-out infinite; }
+@keyframes glint {
+  0%, 100% { filter: brightness(1) drop-shadow(0 2px 0 rgba(255,255,255,.9)) drop-shadow(0 4px 6px rgba(60,64,72,.28)); }
+    50% { filter: brightness(1.1) drop-shadow(0 2px 0 rgba(255,255,255,.9)) drop-shadow(0 4px 6px rgba(60,64,72,.28)); }
+}
+.bolawrap { position: relative; width: 260px; max-width: 100%; }
+.bolawrap img { display: block; width: 100%; height: auto; }
+.sp { position: absolute; opacity: 0; font-style: normal; font-size: 22px; line-height: 1; color: #fff;
+  text-shadow: 0 0 6px #fff, 0 0 2px #8d919a, 0 0 1px #8d919a; animation: tw2 2.8s ease-in-out infinite; }
+.sp::before { content: "✦"; }
+.s1 { top: 12%; left: 8%; }
+.s2 { top: 30%; right: 6%; animation-delay: .9s; }
+.s3 { bottom: 28%; left: 14%; animation-delay: 1.8s; }
+.s4 { top: 6%; right: 28%; animation-delay: 2.3s; }
+@keyframes tw2 { 0%, 100% { opacity: 0; transform: scale(.5) rotate(0deg); } 50% { opacity: 1; transform: scale(1.1) rotate(20deg); } }
+.apellido { font-family: var(--head); font-size: clamp(28px, 8vw, 50px); letter-spacing: .22em; padding-left: .22em; text-transform: uppercase; margin: -25px 0 0; transform: translateX(70px); }
+#ico-play { display: block !important; }
+#ico-pause { display: none !important; }
+#pases { display: none; }
+
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="chrome" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="64" y2="64">
+      <stop offset="0" stop-color="#f9fafb"/><stop offset=".35" stop-color="#a8acb3"/>
+      <stop offset=".6" stop-color="#eceef0"/><stop offset="1" stop-color="#8a8e96"/>
+    </linearGradient>
+  </defs>
+</svg>
+<canvas id="glitter" aria-hidden="true"></canvas>
+
+<main class="invite">
+
+  <header class="ball-wrap rise">
+    <div class="bolawrap"><img src="bola.png" alt="Bola de espejos"><i class="sp s1"></i><i class="sp s2"></i><i class="sp s3"></i><i class="sp s4"></i></div>
+<canvas id="ball" style="display:none"></canvas>
+
+  <div class="rise d1">
+    <div class="xvrow"><small>Mis</small><img class="xvimg" src="xv.png" alt="XV"><small>Años</small></div>
+    <h1 class="name" id="nombre">Ari</h1>
+<p class="apellido">Corzo</p>
+    <p class="intro">Un sueño que comienza, una ilusión que florece y una noche mágica que quiero compartir junto a quienes más quiero.</p>
+    <p class="intro">Tu presencia es muy importante para mí.</p>
+
+    <div class="player" aria-label="Reproductor de música">
+      <audio id="audio" src="musica.mp3" preload="metadata" loop></audio>
+      <input type="range" id="prog" min="0" max="1000" value="0" aria-label="Progreso de la canción">
+      <div class="ctrl">
+        <button type="button" id="back" aria-label="Retroceder 10 segundos"><svg viewBox="0 0 24 24"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg></button>
+        <button type="button" id="play" aria-label="Reproducir música"><svg viewBox="0 0 24 24" id="ico-play"><path d="M7 4v16l13-8z"/></svg><svg viewBox="0 0 24 24" id="ico-pause" hidden><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg></button>
+        <button type="button" id="fwd" aria-label="Adelantar 10 segundos"><svg viewBox="0 0 24 24"><path d="M16 5h2v14h-2zM4 5l11 7L4 19z"/></svg></button>
+
+      </div>
+      <p class="hint" id="song">Tocá play para escuchar</p>
+    </div>
+  </div>
+
+  <section class="block rise d2" aria-label="Fecha y hora">
+    <div class="month" id="mes"></div>
+    <div class="week" id="semana"></div>
+    <div class="arrow" aria-hidden="true">⋮<br>↓</div>
+    <div class="time" id="hora"></div>
+    <div class="count" id="cuenta" role="timer" aria-label="Cuenta regresiva">
+      <div class="seg"><b id="c-d">00</b><span>Días</span></div><div class="colon">:</div>
+      <div class="seg"><b id="c-h">00</b><span>Horas</span></div><div class="colon">:</div>
+      <div class="seg"><b id="c-m">00</b><span>Minutos</span></div><div class="colon">:</div>
+      <div class="seg"><b id="c-s">00</b><span>Segundos</span></div>
+    </div>
+  </section>
+
+  <div class="panel">
+    <h2>Agendar</h2>
+    <p class="sub">Apartá tu fecha para este día especial.</p>
+    <a class="medal" id="agendar" href="#" target="_blank" rel="noopener" aria-label="Agregar al calendario">
+      <svg viewBox="0 0 64 64" fill="url(#chrome)"><rect x="8" y="14" width="48" height="42" rx="6"/><rect x="18" y="6" width="5" height="14" rx="2.5"/><rect x="41" y="6" width="5" height="14" rx="2.5"/><g fill="#fff" fill-opacity=".75"><rect x="15" y="27" width="8" height="8" rx="1.5"/><rect x="28" y="27" width="8" height="8" rx="1.5"/><rect x="41" y="27" width="8" height="8" rx="1.5"/><rect x="15" y="39" width="8" height="8" rx="1.5"/><rect x="28" y="39" width="8" height="8" rx="1.5"/><rect x="41" y="39" width="8" height="8" rx="1.5"/></g></svg>
+    </a>
+    <span class="cta">Agregar a mi calendario</span>
+
+    <div class="gap"></div>
+
+    <h2>Ubicación</h2>
+    <p class="addr" id="lugar"></p>
+    <a class="medal" id="mapa" href="#" target="_blank" rel="noopener" aria-label="Ver ubicación en el mapa">
+      <svg viewBox="0 0 64 64" fill="url(#chrome)"><path d="M32 3C19.8 3 11 12.4 11 24c0 15.5 21 37 21 37s21-21.500 21-37C53 12.400 44.200 3 32 3z"/><circle cx="32" cy="24" r="8.500" fill="#fff" fill-opacity=".85"/></svg>
+    </a>
+    <span class="cta">Ver en el mapa</span>
+  </div>
+
+  <section class="block" aria-label="Código de vestimenta">
+    <h2>Dress Code</h2>
+    <p class="sub" style="font-size:20px;color:var(--ink)">Elegante sport</p>
+    <img src="dresscode.png" alt="Dress code" style="display:block;margin:22px auto 0;width:200px;height:auto;max-width:100%">
+    <p class="sub" style="font-size:20px;color:var(--ink)">Colores Plateado, Azul y Violeta Reservados.</p>
+<p class="sub" style="margin-top:18px">Que los caballeros refejen su porte y las damas brillen con su belleza única.</p>
+  </section>
+
+  <section class="block" aria-label="Recuerdos">
+    <h2>Recuerdos</h2>
+    <p class="sub" style="font-size:20px;color:var(--ink)">Etiquetame y compartí</p>
+    <div class="medal" style="width:120px;height:120px">
+      <svg viewBox="0 0 64 64" fill="none" stroke="url(#chrome)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><rect x="6" y="18" width="52" height="36" rx="6"/><circle cx="32" cy="36" r="10"/><path d="M22 18l4-8h12l4 8"/></svg>
+    </div>
+    <p class="sub" style="margin-top:18px">Etiquetame en tus historias y publicaciones para poder ver y guardar los recuerdos de esta noche tan especial.</p>
+    <a class="chip" href="https://www.instagram.com/ariicorzo_/" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Instagram</a><button id="copiar" type="button" style="display:none"></button><span id="tag" style="display:none"></span>    <p class="hint" id="aviso" aria-live="polite"></p>
+  </section>
+
+  <div class="panel">
+    <h2>Pases</h2>
+    <p class="sub">Cantidad máxima de personas</p>
+    <div class="medal" style="width:120px;height:120px">
+      <svg viewBox="0 0 64 64" fill="none" stroke="url(#chrome)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"><path d="M8 20h48v9a4 4 0 0 0 0 8v9H8v-9a4 4 0 0 0 0-8z"/><path d="M42 23v18" stroke-dasharray="3 5"/></svg>
+    </div>
+    <p style="font-family:var(--num);font-weight:600;font-size:40px;line-height:1;margin-top:14px" id="pases">1</p>
+    <p class="sub" style="margin-top:12px">Por favor, indicá la cantidad de personas que asistirán y sus nombres al confirmar.</p>
+
+    <div class="gap"></div>
+
+    <h2>Asistencia</h2>
+    <p class="sub">Tu presencia es muy importante para mí.</p>
+        <div class="medal" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none" stroke="url(#chrome)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"><path d="M14 34l12 12 24-27"/></svg>
+    </div>
+    <a class="chip" id="btnConfirmar" href="#" target="_blank" rel="noopener" style="display:inline-block;text-decoration:none">Confirmar por WhatsApp</a>
+    <p style="margin-top:20px;font-size:19px">Confirmar antes del <span id="limite"></span>.</p>
+  </div>
+
+  <section class="close">
+    <p class="sub" style="font-size:20px"script">Gracias por acompañarme</p>
+  </section>
+</main>
+
+<script>
+/* Datos de la invitación: cambiá estos valores y la página se actualiza sola. */
+var CONFIG = {
+  nombre: 'Ariana',
+  inicio: '2026-12-19T21:00:00-03:00',
+  lugar: ['Malva Negra', 'Vox Dei, Arquitecto Taboada 150', 'San Roque, Córdoba'],
+  mapa: 'https://maps.app.goo.gl/zsSYEiVmN4NvJiCE9',
+  pases: 1,
+    linkConfirmar: 'https://w.app/a7bvt0',
+  whatsapp: '',
+  hashtag: '#Ari15XV',
+  fechaLimite: '30 de noviembre'
+};
+
+(function () {
+  var MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var DIAS = ['DOM','LUN','MAR','MIE','JUE','VIE','SAB'];
+  var $ = function (id) { return document.getElementById(id); };
+  var start = new Date(CONFIG.inicio);
+  var ar = new Date(start.getTime() - 3 * 3600e3); /* hora de Argentina (UTC-3) */
+  function pad(n, l) { n = String(n); while (n.length < (l || 2)) n = '0' + n; return n; }
+
+  $('nombre').textContent = CONFIG.nombre;
+  $('mes').textContent = MESES[ar.getUTCMonth()];
+  var wk = '', k, t;
+  for (k = -3; k <= 3; k++) { t = new Date(ar.getTime() + k * 864e5); wk += '<div class="wd' + (k === 0 ? ' on' : '') + '">' + DIAS[t.getUTCDay()] + '</div>'; }
+  for (k = -3; k <= 3; k++) { t = new Date(ar.getTime() + k * 864e5); wk += '<div class="dn' + (k === 0 ? ' on' : ' dim') + '">' + t.getUTCDate() + '</div>'; }
+  $('semana').innerHTML = wk;
+  $('semana').style.gridAutoFlow = 'row';
+
+  var h = ar.getUTCHours(), mi = ar.getUTCMinutes();
+  $('hora').textContent = (h % 12 || 12) + ':' + pad(mi) + ' ' + (h >= 12 ? 'P.M.' : 'A.M.');
+
+  $('lugar').innerHTML = CONFIG.lugar.map(function (l) { return l; }).join('<br>');
+  $('pases').textContent = CONFIG.pases;
+  $('tag').textContent = CONFIG.hashtag;
+   $('limite').textContent = CONFIG.fechaLimite;
+
+  var enc = encodeURIComponent, place = CONFIG.lugar.join(', ');
+  function fmt(d) { return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+  var end = new Date(start.getTime() + 5 * 3600e3);
+  $('agendar').href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + enc('Mis XV años de ' + CONFIG.nombre) +
+    '&dates=' + fmt(start) + '/' + fmt(end) + '&location=' + enc(place);
+  $('mapa').href = CONFIG.mapa || ('https://www.google.com/maps?q=' + enc(place));
+   var btn = $('btnConfirmar');
+  if (CONFIG.linkConfirmar) btn.href = CONFIG.linkConfirmar;
+  else { btn.removeAttribute('href'); btn.removeAttribute('target'); }
+  function tick() {
+    var d = Math.max(0, start.getTime() - Date.now());
+    $('c-d').textContent = pad(Math.floor(d / 864e5));
+    $('c-h').textContent = pad(Math.floor(d % 864e5 / 36e5));
+    $('c-m').textContent = pad(Math.floor(d % 36e5 / 6e4));
+    $('c-s').textContent = pad(Math.floor(d % 6e4 / 1e3));
+  }
+  tick(); setInterval(tick, 1000);
+
+  $('copiar').addEventListener('click', function () {
+    var ok = function () { $('aviso').textContent = 'Copiado. Pegalo en tu publicación.'; };
+    var no = function () { $('aviso').textContent = 'No se pudo copiar. Escribí ' + CONFIG.hashtag; };
+    try { navigator.clipboard.writeText(CONFIG.hashtag).then(ok, no); } catch (e) { no(); }
+  });
+
+  /* Música */
+  var au = $('audio'), prog = $('prog'), seeking = false;
+  function setP() { var p = au.duration ? au.currentTime / au.duration * 100 : 0; prog.style.setProperty('--p', p + '%'); if (!seeking) prog.value = p * 10; }
+  function ui(playing) {
+    $('ico-play').hidden = playing; $('ico-pause').hidden = !playing;
+    $('play').setAttribute('aria-label', playing ? 'Pausar música' : 'Reproducir música');
+    $('song').textContent = playing ? 'Sonando ahora' : 'Tocá play para escuchar';
+  }
+  $('play').addEventListener('click', function () {
+    if (au.paused) { var r = au.play(); if (r && r.catch) r.catch(function () { $('song').textContent = 'No se pudo reproducir'; }); }
+    else au.pause();
+  });
+  au.addEventListener('play', function () { ui(true); });
+  au.addEventListener('pause', function () { ui(false); });
+  au.addEventListener('timeupdate', setP);
+  au.addEventListener('loadedmetadata', setP);
+  $('back').addEventListener('click', function () { au.currentTime = Math.max(0, au.currentTime - 10); });
+  $('fwd').addEventListener('click', function () { au.currentTime = Math.min(au.duration || 0, au.currentTime + 10); });
+  prog.addEventListener('input', function () { seeking = true; if (au.duration) au.currentTime = prog.value / 1000 * au.duration; prog.style.setProperty('--p', prog.value / 10 + '%'); });
+  prog.addEventListener('change', function () { seeking = false; });
+
+  var still = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Bola de espejos */
+  var cv = $('ball'), ctx = cv.getContext('2d');
+  var dpr = Math.min(window.devicePixelRatio || 1, 2), W = 260, H = 275;
+  cv.width = W * dpr; cv.height = H * dpr; ctx.scale(dpr, dpr);
+  var cx = 130, cy = 165, R = 104, N = 15, tilt = 0.28;
+  var Lr = [-0.5, 0.55, 0.65], ll = Math.sqrt(Lr[0]*Lr[0] + Lr[1]*Lr[1] + Lr[2]*Lr[2]);
+  var Lv = [Lr[0]/ll, Lr[1]/ll, Lr[2]/ll];
+  function hash(a, b) { var s = Math.sin(a * 127.1 + b * 311.7) * 43758.5453; return s - Math.floor(s); }
+  function pt(lat, lon, rot) {
+    var x = Math.cos(lat) * Math.sin(lon + rot), y = Math.sin(lat), z = Math.cos(lat) * Math.cos(lon + rot);
+    return [x, y * Math.cos(tilt) - z * Math.sin(tilt), y * Math.sin(tilt) + z * Math.cos(tilt)];
+  }
+  function star(x, y, s, a, col) {
+    ctx.save(); ctx.translate(x, y); ctx.globalAlpha = a; ctx.fillStyle = col;
+    ctx.beginPath(); ctx.moveTo(0, -s); ctx.quadraticCurveTo(0, 0, s, 0); ctx.quadraticCurveTo(0, 0, 0, s);
+    ctx.quadraticCurveTo(0, 0, -s, 0); ctx.quadraticCurveTo(0, 0, 0, -s); ctx.fill(); ctx.restore();
+  }
+  function ball(t) {
+    ctx.clearRect(0, 0, W, H);
+    ctx.strokeStyle = 'rgba(120,124,132,.75)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, cy - R); ctx.stroke();
+    ctx.fillStyle = '#9a9ea6'; ctx.fillRect(cx - 7, cy - R - 7, 14, 9);
+    ctx.save(); ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.clip();
+    var bg = ctx.createRadialGradient(cx - 30, cy - 35, 10, cx, cy, R);
+    bg.addColorStop(0, '#d9dbdf'); bg.addColorStop(1, '#6c7078'); ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    var rot = t * 0.00035, i, j;
+    for (i = 0; i < N; i++) {
+      var la0 = -Math.PI / 2 + Math.PI * i / N, la1 = -Math.PI / 2 + Math.PI * (i + 1) / N, mid = (la0 + la1) / 2;
+      var M = Math.max(5, Math.round(30 * Math.cos(mid))), lp = (la1 - la0) * 0.1;
+      for (j = 0; j < M; j++) {
+        var lo0 = j / M * 6.2832, lo1 = (j + 1) / M * 6.2832, pd = (lo1 - lo0) * 0.1;
+        var c = pt(mid, (lo0 + lo1) / 2, rot); if (c[2] <= 0.02) continue;
+        var q = [pt(la0 + lp, lo0 + pd, rot), pt(la0 + lp, lo1 - pd, rot), pt(la1 - lp, lo1 - pd, rot), pt(la1 - lp, lo0 + pd, rot)];
+        var hh = hash(i, j), diff = Math.max(0, c[0] * Lv[0] + c[1] * Lv[1] + c[2] * Lv[2]);
+        var g = 70 + diff * 140 + hh * 35;
+        g += Math.pow(Math.max(0, Math.sin(t * 0.002 * (0.5 + hh) + hh * 40)), 24) * 110;
+        g = Math.min(255, g * (0.55 + 0.45 * c[2]));
+        ctx.fillStyle = 'rgb(' + (g | 0) + ',' + (g | 0) + ',' + Math.min(255, (g + 5) | 0) + ')';
+        ctx.beginPath(); ctx.moveTo(cx + R * q[0][0], cy - R * q[0][1]);
+        for (var m = 1; m < 4; m++) ctx.lineTo(cx + R * q[m][0], cy - R * q[m][1]);
+        ctx.closePath(); ctx.fill();
+        ctx.strokeStyle = 'rgba(40,42,48,.35)'; ctx.lineWidth = 0.6; ctx.stroke();
+      }
+    }
+    var hl = ctx.createRadialGradient(cx - 36, cy - 42, 2, cx - 36, cy - 42, 62);
+    hl.addColorStop(0, 'rgba(255,255,255,.6)'); hl.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = hl; ctx.fillRect(0, 0, W, H);
+    var vg = ctx.createRadialGradient(cx, cy, R * 0.68, cx, cy, R);
+    vg.addColorStop(0, 'rgba(30,32,38,0)'); vg.addColorStop(1, 'rgba(30,32,38,.5)');
+    ctx.fillStyle = vg; ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+    ctx.strokeStyle = 'rgba(255,255,255,.55)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.stroke();
+    var S = [[-122, -62, 10, 0.0], [118, -22, 8, 1.7], [98, -104, 11, 3.1], [-96, 46, 7, 4.4], [8, 112, 6, 2.4]];
+    for (i = 0; i < S.length; i++) {
+      var a = Math.pow((Math.sin(t * 0.002 + S[i][3]) + 1) / 2, 2);
+      star(cx + S[i][0], cy + S[i][1], S[i][2], 0.25 + 0.75 * a, '#8f939b');
+      star(cx + S[i][0], cy + S[i][1], S[i][2] * 0.6, 0.3 + 0.7 * a, '#ffffff');
+    }
+  }
+
+  /* Brillos de fondo */
+  var gc = $('glitter'), gx = gc.getContext('2d'), P = [], gw = 0, gh = 0;
+  function sizeG() {
+    gw = window.innerWidth; gh = window.innerHeight; gc.width = gw * dpr; gc.height = gh * dpr;
+    gx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    P = []; var n = Math.round(Math.min(90, gw * gh / 9000)), q;
+    for (q = 0; q < n; q++) P.push({ x: Math.random() * gw, y: Math.random() * gh, r: 1.5 + Math.random() * 3.5, ph: Math.random() * 6.28, sp: 0.8 + Math.random() * 1.8, w: Math.random() < 0.55 });
+  }
+  function glit(t) {
+    gx.clearRect(0, 0, gw, gh);
+    for (var q = 0; q < P.length; q++) {
+      var p = P[q], a = Math.pow((Math.sin(t * 0.001 * p.sp + p.ph) + 1) / 2, 3);
+      gx.globalAlpha = 0.15 + 0.85 * a; gx.fillStyle = p.w ? '#ffffff' : '#8d919a';
+      var s = p.r * (0.6 + a * 0.8);
+      gx.beginPath(); gx.moveTo(p.x, p.y - s * 2); gx.quadraticCurveTo(p.x, p.y, p.x + s * 2, p.y); gx.quadraticCurveTo(p.x, p.y, p.x, p.y + s * 2);
+      gx.quadraticCurveTo(p.x, p.y, p.x - s * 2, p.y); gx.quadraticCurveTo(p.x, p.y, p.x, p.y - s * 2); gx.fill();
+      if (p.w) { gx.globalAlpha = 0.5 * a; gx.strokeStyle = '#8d919a'; gx.lineWidth = 0.5; gx.stroke(); }
+    }
+    gx.globalAlpha = 1;
+  }
+  sizeG(); window.addEventListener('resize', sizeG);
+
+  if (still) { ball(1500); glit(1500); }
+  else {
+    var last = 0;
+    (function loop(t) { ball(t); if (t - last > 33) { glit(t); last = t; } requestAnimationFrame(loop); })(0);
+  }
+})();
+</script>
+</body>
+</html>
